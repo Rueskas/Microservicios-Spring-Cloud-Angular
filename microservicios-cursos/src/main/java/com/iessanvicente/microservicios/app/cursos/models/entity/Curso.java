@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
@@ -17,6 +18,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.iessanvicente.microservicios.commons.alumnos.models.entities.Alumno;
+import com.iessanvicente.microservicios.commons.examenes.models.entities.Examen;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -41,7 +43,10 @@ public class Curso {
 	private Date createAt;
 	
 	@OneToMany(fetch = FetchType.LAZY)
-	Set<Alumno> alumnos = new HashSet<>();
+	private Set<Alumno> alumnos = new HashSet<>();
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	private Set<Examen> examenes = new HashSet<>();
 	
 	@PrePersist
 	public void prePersis() {
@@ -54,5 +59,13 @@ public class Curso {
 	
 	public void removeAlumno(Alumno alumno) {
 		this.alumnos.removeIf(a -> a.getId() == alumno.getId());
+	}
+	
+	public void addExamen(Examen examen) {
+		this.examenes.add(examen);
+	}
+	
+	public void removeExamen(Examen examen) {
+		this.examenes.removeIf(e -> e.getId() == examen.getId());
 	}
 }

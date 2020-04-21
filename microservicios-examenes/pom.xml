@@ -9,10 +9,10 @@
 		<version>2.2.6.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.iessanvicente.microservicios.app.cursos</groupId>
-	<artifactId>microservicios-cursos</artifactId>
+	<groupId>com.iessanvicente.microservicios.app.examenes</groupId>
+	<artifactId>microservicios-examenes</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>microservicios-cursos</name>
+	<name>microservicios-examenes</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
@@ -67,11 +67,6 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>com.iessanvicente.microservicios.commons.alumnos</groupId>
-			<artifactId>commons-alumnos</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-				<dependency>
 			<groupId>com.iessanvicente.microservicios.commons.examenes</groupId>
 			<artifactId>commons-examenes</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
