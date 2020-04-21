@@ -16,7 +16,6 @@ import com.iessanvicente.microservicios.app.usuarios.models.entity.Alumno;
 import com.iessanvicente.microservicios.app.usuarios.models.services.IAlumnoService;
 
 @RestController
-@RequestMapping("/api/alumnos")
 public class AlumnoController {
 	@Autowired
 	private IAlumnoService alumnoService;
@@ -46,9 +45,12 @@ public class AlumnoController {
 			return ResponseEntity.notFound().build();
 		}
 		
-		alumnoEncontrado.setNombre(alumno.getNombre());
-		alumnoEncontrado.setApellidos(alumno.getApellidos());
-		alumnoEncontrado.setEmail(alumno.getEmail());
+		alumnoEncontrado.setNombre(alumno.getNombre() != null?
+				alumno.getNombre() : alumnoEncontrado.getNombre());
+		alumnoEncontrado.setApellidos(alumno.getApellidos() != null?
+				alumno.getApellidos() : alumnoEncontrado.getApellidos());
+		alumnoEncontrado.setEmail(alumno.getEmail() != null?
+				alumno.getEmail() : alumnoEncontrado.getEmail());
 		
 		return ResponseEntity.status(HttpStatus.CREATED)
 				.body(alumnoService.save(alumnoEncontrado));
