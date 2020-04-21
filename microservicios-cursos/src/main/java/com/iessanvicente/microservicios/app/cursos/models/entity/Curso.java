@@ -1,4 +1,4 @@
-package com.iessanvicente.microservicios.app.usuarios.models.entity;
+package com.iessanvicente.microservicios.app.cursos.models.entity;
 
 import java.util.Date;
 
@@ -20,21 +20,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="alumnos")
-public class Alumno {
+@Table(name="cursos")
+public class Curso {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	
 	private String nombre;
-	private String apellidos;
-	private String email;
-	@Column(name="create_At")
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="create_At")
 	private Date createAt;
 	
 	@PrePersist
-	public void prePersist() {
+	public void prePersis() {
 		createAt = new Date();
 	}
 }
