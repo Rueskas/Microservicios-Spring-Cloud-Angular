@@ -41,4 +41,18 @@ public class Alumno {
 	public void prePersist() {
 		createAt = new Date();
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(this == obj) {
+			return true;
+		}
+		
+		if(!(obj instanceof Alumno)) {
+			return false;
+		}
+		Alumno a = (Alumno) obj;
+
+		return this.id == a.getId();
+	}
 }
