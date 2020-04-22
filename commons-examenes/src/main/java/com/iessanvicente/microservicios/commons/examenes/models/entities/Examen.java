@@ -18,6 +18,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -58,6 +59,9 @@ public class Examen {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="asignatura_id")
 	private Asignatura asignatura;
+	
+	@Transient
+	private boolean respondido;
 	
 	@PrePersist
 	public void prePersist() {

@@ -2,6 +2,8 @@ package com.iessanvicente.microservicios.app.cursos.controllers;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -115,8 +117,17 @@ public class CursoController extends CommonController<Curso, ICursoService>{
 		if(!o.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
-		
-		return ResponseEntity.ok(o.get());
+		List<Long> examenesIdsRespondidos = service.obtenerExamenesIdsConRespuestasPorAlumno(id);
+		Curso curso = o.get();
+		Set<Examen> examenes = curso.getExamenes()
+				.stream()
+				.map(examen -> {
+					examen.setRespondido(examenesIdsRespondidos.contains(examen.getId()));
+					return examen;
+				})
+				.collect(Collectors.toSet());
+		curso.setExamenes(examenes);
+		return ResponseEntity.ok(curso);
 		
 	}
 }
