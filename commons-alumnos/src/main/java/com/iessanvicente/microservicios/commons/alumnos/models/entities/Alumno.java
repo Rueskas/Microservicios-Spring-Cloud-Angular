@@ -11,6 +11,8 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,8 +32,12 @@ public class Alumno {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotBlank
 	private String nombre;
+	@NotBlank
 	private String apellidos;
+	@NotBlank
+	@Email
 	private String email;
 	@Column(name="create_At")
 	@Temporal(TemporalType.TIMESTAMP)

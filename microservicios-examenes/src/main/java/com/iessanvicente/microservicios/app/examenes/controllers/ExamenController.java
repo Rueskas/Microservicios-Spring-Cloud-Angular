@@ -4,8 +4,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,7 +23,12 @@ import com.iessanvicente.microservicios.commons.examenes.models.entities.Examen;
 public class ExamenController extends CommonController<Examen, IExamenService>{
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<?> editar(@PathVariable Long id, @RequestBody Examen examen) {
+	public ResponseEntity<?> editar(@PathVariable Long id, 
+			@Valid @RequestBody Examen examen,
+			BindingResult result) {
+		if(result.hasErrors()) {
+			return getResponseErrores(result);
+		}
 		Optional<Examen> o = service.findById(id);
 		if(!o.isPresent()) {
 			return ResponseEntity.notFound().build();

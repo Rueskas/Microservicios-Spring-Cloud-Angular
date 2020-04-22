@@ -2,8 +2,11 @@ package com.iessanvicente.microservicios.app.usuarios.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -18,7 +21,12 @@ import com.iessanvicente.microservicios.commons.controllers.CommonController;
 public class AlumnoController extends CommonController<Alumno, IAlumnoService> {
 
 	@PutMapping("/{id}")
-	public ResponseEntity<?> actualizar(@PathVariable Long id, @RequestBody Alumno alumno){
+	public ResponseEntity<?> actualizar(@PathVariable Long id, @Valid @RequestBody Alumno alumno,
+			BindingResult result){
+		if(result.hasErrors()) {
+			return getResponseErrores(result);
+		}
+		
 		Alumno alumnoEncontrado = service.findById(id).orElse(null);
 		if(alumnoEncontrado == null) {
 			return ResponseEntity.notFound().build();

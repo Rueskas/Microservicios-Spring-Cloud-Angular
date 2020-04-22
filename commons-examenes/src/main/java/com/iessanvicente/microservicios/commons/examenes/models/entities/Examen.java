@@ -18,6 +18,8 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -39,6 +41,7 @@ public class Examen {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	@NotBlank
 	private String nombre;
 	
 	@Temporal(TemporalType.TIMESTAMP)
@@ -49,6 +52,8 @@ public class Examen {
 	@JsonIgnoreProperties(value={"examen"}, allowSetters=true)
 	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval = true, mappedBy="examen")
 	private Set<Pregunta> preguntas = new HashSet<>();
+	
+	@NotNull
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="asignatura_id")

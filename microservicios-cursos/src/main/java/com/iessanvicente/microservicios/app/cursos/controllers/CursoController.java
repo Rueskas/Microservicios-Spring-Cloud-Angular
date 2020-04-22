@@ -3,9 +3,12 @@ package com.iessanvicente.microservicios.app.cursos.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -22,7 +25,10 @@ import com.iessanvicente.microservicios.commons.examenes.models.entities.Examen;
 public class CursoController extends CommonController<Curso, ICursoService>{
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<?> modificar(@PathVariable Long id, @RequestBody Curso curso) {
+	public ResponseEntity<?> modificar(@PathVariable Long id, @Valid @RequestBody Curso curso, BindingResult result) {
+		if(result.hasErrors()) {
+			return getResponseErrores(result);
+		}
 		Curso cursoDB = service.findById(id).orElse(null);
 		if(cursoDB == null) {
 			return ResponseEntity.notFound().build();
@@ -33,7 +39,8 @@ public class CursoController extends CommonController<Curso, ICursoService>{
 	}
 	
 	@PutMapping("/{id}/asignar-alumnos")
-	public ResponseEntity<?> asignarAlumnos(@PathVariable Long id, @RequestBody List<Alumno> alumnos){
+	public ResponseEntity<?> asignarAlumnos(@PathVariable Long id, @RequestBody List<Alumno> alumnos) {
+
 		Optional<Curso> o = service.findById(id);
 		if(!o.isPresent()) {
 			return ResponseEntity.notFound().build();
@@ -50,7 +57,7 @@ public class CursoController extends CommonController<Curso, ICursoService>{
 	}
 	
 	@PutMapping("/{id}/eliminar-alumno")
-	public ResponseEntity<?> eliminarAlumno(@PathVariable Long id, @RequestBody Alumno alumno){		
+	public ResponseEntity<?> eliminarAlumno(@PathVariable Long id, @RequestBody Alumno alumno) {	
 		Optional<Curso> o = service.findById(id);
 		if(!o.isPresent()) {
 			return ResponseEntity.notFound().build();
@@ -67,7 +74,8 @@ public class CursoController extends CommonController<Curso, ICursoService>{
 	}
 	
 	@PutMapping("/{id}/asignar-examenes")
-	public ResponseEntity<?> asignarExamenes(@PathVariable Long id, @RequestBody List<Examen> examenes){
+	public ResponseEntity<?> asignarExamenes(@PathVariable Long id,@RequestBody List<Examen> examenes) {
+
 		Optional<Curso> o = service.findById(id);
 		if(!o.isPresent()) {
 			return ResponseEntity.notFound().build();
@@ -84,7 +92,8 @@ public class CursoController extends CommonController<Curso, ICursoService>{
 	}
 	
 	@PutMapping("/{id}/eliminar-examen")
-	public ResponseEntity<?> eliminarExamen(@PathVariable Long id, @RequestBody Examen examen){		
+	public ResponseEntity<?> eliminarExamen(@PathVariable Long id, @RequestBody Examen examen) {
+	
 		Optional<Curso> o = service.findById(id);
 		if(!o.isPresent()) {
 			return ResponseEntity.notFound().build();
