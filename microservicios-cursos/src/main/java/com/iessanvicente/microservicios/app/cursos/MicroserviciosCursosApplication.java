@@ -10,7 +10,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableEurekaClient
 @SpringBootApplication
 @EntityScan({
-	"com.iessanvicente.microservicios.commons.alumnos.models.entities",
 	"com.iessanvicente.microservicios.app.cursos.models.entity",
 	"com.iessanvicente.microservicios.commons.examenes.models.entities"
 	})
