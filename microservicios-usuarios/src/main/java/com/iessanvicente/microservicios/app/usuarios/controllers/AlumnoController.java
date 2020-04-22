@@ -28,6 +28,11 @@ import com.iessanvicente.microservicios.commons.controllers.CommonController;
 @RestController
 public class AlumnoController extends CommonController<Alumno, IAlumnoService> {
 
+	@GetMapping("/por-curso")
+	public ResponseEntity<?> obtenerAlumnosPorCursos(@RequestParam List<Long> ids){
+		return ResponseEntity.ok(service.findAllById(ids));
+	}
+	
 	@PutMapping("/{id}")
 	public ResponseEntity<?> actualizar(@PathVariable Long id, @Valid @RequestBody Alumno alumno,
 			BindingResult result){

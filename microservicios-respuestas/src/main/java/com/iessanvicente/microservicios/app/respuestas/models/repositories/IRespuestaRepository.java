@@ -10,12 +10,11 @@ import com.iessanvicente.microservicios.app.respuestas.models.entities.Respuesta
 public interface IRespuestaRepository extends CrudRepository<Respuesta, Long>{
 	@Query("select r "
 			+ "from Respuesta r "
-			+ "join fetch r.alumno a "
 			+ "join fetch r.pregunta p "
 			+ "join fetch p.examen e "
-			+ "where a.id = ?1 and e.id = ?2")
+			+ "where r.alumnoId = ?1 and e.id = ?2")
 	public List<Respuesta> findRespuestaByAlumnoByExamen(Long alumnoId, Long examenId);
 	
-	@Query("select distinct e.id from Respuesta r join r.pregunta p join p.examen e join r.alumno a where a.id=?1")
+	@Query("select DISTINCT(e.id) from Respuesta r join r.pregunta p join p.examen e where r.alumnoId=?1")
 	public List<Long> findExamenesIdConRespuestaByAlumno(Long alumnoId);
 }

@@ -22,6 +22,8 @@ public class RespuestaController {
 	
 	@PostMapping
 	public ResponseEntity<?> crear(@RequestBody List<Respuesta> respuestas){
+		respuestas.forEach(r -> r.setAlumnoId(r.getAlumno().getId()));
+		System.out.println(respuestas);
 		return ResponseEntity.status(HttpStatus.CREATED)
 				.body(service.saveAll(respuestas));
 	}

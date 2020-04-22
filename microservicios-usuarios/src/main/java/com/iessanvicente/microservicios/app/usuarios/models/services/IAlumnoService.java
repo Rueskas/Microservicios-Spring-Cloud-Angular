@@ -7,4 +7,5 @@ import com.iessanvicente.microservicios.commons.service.ICommonService;
 
 public interface IAlumnoService extends ICommonService<Alumno> {
 	public List<Alumno> findByNombreOrApellido(String term);
+	public List<Alumno> findAllById(List<Long> ids);
 }

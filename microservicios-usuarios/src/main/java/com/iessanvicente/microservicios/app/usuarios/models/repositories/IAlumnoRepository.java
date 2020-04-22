@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import com.iessanvicente.microservicios.commons.alumnos.models.entities.Alumno;
 
 public interface IAlumnoRepository extends JpaRepository<Alumno, Long> {
-	@Query("select a from Alumno a where a.nombre like %?1% or a.apellidos like %?1%")
+	@Query("select a from Alumno a where upper(a.nombre) like concat('%',upper(?1),'%') or upper(a.apellidos) like concat('%',upper(?1),'%')")
 	public List<Alumno> findByNombreOrApellido(String term);
 }
