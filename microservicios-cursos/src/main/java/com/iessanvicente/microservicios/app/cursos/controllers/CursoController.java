@@ -1,12 +1,15 @@
 package com.iessanvicente.microservicios.app.cursos.controllers;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +29,16 @@ import com.iessanvicente.microservicios.commons.examenes.models.entities.Examen;
 @RestController
 public class CursoController extends CommonController<Curso, ICursoService>{
 	
+	@Value("${config.balanceador.test}")
+	private String balanceadorTest;
+	
+	@GetMapping("/balanceador-test")
+	public ResponseEntity<?> balanceadorTest() {
+		Map<String, Object> response = new HashMap<>();
+		response.put("cursos", service.findAll());
+		response.put("balanceador", balanceadorTest);
+		return ResponseEntity.ok(response);
+	}
 	@PutMapping("/{id}")
 	public ResponseEntity<?> modificar(@PathVariable Long id, @Valid @RequestBody Curso curso, BindingResult result) {
 		if(result.hasErrors()) {
