@@ -9,4 +9,5 @@ import com.iessanvicente.microservicios.commons.service.ICommonService;
 public interface IExamenService extends ICommonService<Examen> {
 	public List<Examen> findByNombre(String term);
 	public List<Asignatura> findAllAsignaturas();
+	public List<Long> findByPreguntaIds(List<Long> preguntaIds);
 }
