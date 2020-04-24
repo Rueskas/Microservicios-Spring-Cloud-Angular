@@ -3,67 +3,23 @@ import { AlumnoService } from 'src/app/services/alumno.service';
 import { Alumno } from 'src/app/models/alumno';
 import { Router, ActivatedRoute } from '@angular/router'
 import Swal from 'sweetalert2';
+import { CommonFormComponent } from '../common-form';
 
 @Component({
   selector: 'app-alumnos-form',
   templateUrl: './alumnos-form.component.html',
   styleUrls: ['./alumnos-form.component.css']
 })
-export class AlumnosFormComponent implements OnInit {
-  titulo: string = "Crear Alumno";
-  alumno: Alumno = new Alumno();
-  errors: any;
+export class AlumnosFormComponent extends CommonFormComponent<Alumno, AlumnoService> implements OnInit {
+  entity: Alumno = new Alumno();
+  protected nombreModel: string = "Alumno";
+  protected rutaRedirect: string = "/alumnos";
   constructor( 
-    private _alumnoService: AlumnoService,
-    private _router: Router,
-    private _activatedRoute: ActivatedRoute) { }
+    protected service: AlumnoService,
+    protected router: Router,
+    protected activatedRoute: ActivatedRoute) {
+      super(service, router, activatedRoute);
+     }
 
-  ngOnInit(): void {
-    this._activatedRoute.paramMap.subscribe(
-      params => {
-        if(params.get('id')){
-          this._alumnoService.ver(+params.get('id')).subscribe(
-            alumno => this.alumno = alumno,
-            error => {
-              if(error.status === 404){
-                Swal.fire('Alumno No Encontrado', `El alumno con ID: ${params.get('id')} no existe`, 'error');
-                this._router.navigate(['/alumnos']);
-              }
-            }
-          )
-        }
-      }
-    )
-  }
-
-  public crear(): void{
-    this._alumnoService.crear(this.alumno)
-    .subscribe(
-      alumno => {
-        Swal.fire('Alumno Creado', `Alumno ${alumno.nombre} creado con éxito`, 'success');
-        this._router.navigate(['/alumnos']);
-     },
-     error => {
-       if(error.status === 400) {
-        this.errors = error.error; 
-        console.log(this.errors);
-       }
-     });
-  }
-
-  public editar(): void{
-    this._alumnoService.editar(this.alumno)
-    .subscribe(
-      alumno => {
-        Swal.fire('Alumno Editado', `Alumno ${alumno.nombre} editado con éxito`, 'success');
-        this._router.navigate(['/alumnos']);
-     },
-     error => {
-       if(error.status === 400) {
-        this.errors = error.error; 
-        console.log(this.errors);
-       }
-     });
-  }
 
 }

@@ -4,7 +4,7 @@
     </div>
     <div class="card-body text-dark">
         <a routerLink="/alumnos/form" class="btn btn-primary mb-4">Crear</a>
-        <div class="alert alert-info" *ngIf="alumnos?.length==0 else tableAlumnos">
+        <div class="alert alert-info" *ngIf="entities?.length==0 else tableAlumnos">
             No hay alumnos para mostrar.
         </div>
         <ng-template #tableAlumnos>
@@ -21,7 +21,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let alumno of alumnos">
+                    <tr *ngFor="let alumno of entities">
                         <td>{{alumno.id}}</td>
                         <td>{{alumno.nombre}}</td>
                         <td>{{alumno.apellidos}}</td>

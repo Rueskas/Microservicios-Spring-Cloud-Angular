@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
+import { CommonService } from './common.service';
+import { Curso } from '../models/curso';
 import { HttpClient } from '@angular/common/http';
-import { Global } from './global';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CursoService {
-  private _endpoint: string = '/cursos';
-  private _url: string = Global.URL;
-  
-  constructor(private _http: HttpClient) { }
+export class CursoService extends CommonService<Curso> {
+  protected endpoint: string = '/cursos';
+  constructor(http: HttpClient) { 
+    super(http);
+  }
 }
