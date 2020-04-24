@@ -8,19 +8,23 @@ import { ExamenesComponent } from './components/examenes/examenes.component';
 import { AppRoutingModule } from './app-routing.module';
 import { LayoutModule } from './layout/layout.module';
 import { HttpClientModule} from '@angular/common/http';
+import { AlumnosFormComponent } from './components/alumnos/alumnos-form.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     AlumnosComponent,
     CursosComponent,
-    ExamenesComponent
+    ExamenesComponent,
+    AlumnosFormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     LayoutModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

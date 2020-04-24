@@ -1,1 +1,37 @@
-<h1>{{titulo}}</h1>
+<div class="card border-dark mb-3">
+    <div class="card-header">
+        <h2>{{titulo}}</h2>
+    </div>
+    <div class="card-body text-dark">
+        <a routerLink="/alumnos/form" class="btn btn-primary mb-4">Crear</a>
+        <div class="alert alert-info" *ngIf="alumnos?.length==0 else tableAlumnos">
+            No hay alumnos para mostrar.
+        </div>
+        <ng-template #tableAlumnos>
+            <table class="table table-hover trable-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        <th>Apellidos</th>
+                        <th>Email</th>
+                        <th>Fecha</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let alumno of alumnos">
+                        <td>{{alumno.id}}</td>
+                        <td>{{alumno.nombre}}</td>
+                        <td>{{alumno.apellidos}}</td>
+                        <td>{{alumno.email}}</td>
+                        <td>{{alumno.createAt | date: 'E, dd-MM-yyyy'}}</td>
+                        <td><a [routerLink]='["/alumnos/form", alumno.id]' class="btn btn-success">&raquo;</a></td>
+                        <td><a class="btn btn-danger text-white" (click)="eliminar(alumno.id)">X</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </ng-template>
+    </div>
+</div>
