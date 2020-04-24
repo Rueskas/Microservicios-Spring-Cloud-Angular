@@ -2,7 +2,6 @@ package com.iessanvicente.microservicios.app.respuestas.models.entities;
 
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.iessanvicente.microservicios.commons.alumnos.models.entities.Alumno;
@@ -27,12 +26,12 @@ public class Respuesta {
 	
 	private String texto;
 	
-	@Transient
+	//@Transient
 	private Alumno alumno;
 	
 	private Long alumnoId;
 	
-	@Transient
+	//@Transient
 	private Pregunta pregunta;
 	
 	private Long preguntaId;

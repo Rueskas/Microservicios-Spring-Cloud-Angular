@@ -1,25 +1,20 @@
 package com.iessanvicente.microservicios.app.respuestas.models.services;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.iessanvicente.microservicios.app.respuestas.clients.ExamenFeignClient;
 import com.iessanvicente.microservicios.app.respuestas.models.entities.Respuesta;
 import com.iessanvicente.microservicios.app.respuestas.models.repositories.IRespuestaRepository;
-import com.iessanvicente.microservicios.commons.examenes.models.entities.Examen;
-import com.iessanvicente.microservicios.commons.examenes.models.entities.Pregunta;
 
 @Service
 public class RespuestaServiceImpl implements IRespuestaService{
 	@Autowired
 	private IRespuestaRepository repository;
-	@Autowired
-	private ExamenFeignClient examenFeignClient;
+	//@Autowired
+	//private ExamenFeignClient examenFeignClient;
 	@Override
 	public List<Respuesta> saveAll(List<Respuesta> respuestas) {
 		return (List<Respuesta>) repository.saveAll(respuestas);
@@ -27,7 +22,7 @@ public class RespuestaServiceImpl implements IRespuestaService{
 	
 	@Override
 	public List<Respuesta> findByAlumnoByExamen(Long alumnoId, Long examenId) {
-		Examen examen = examenFeignClient.obtenerExamenPorId(examenId);
+		/*Examen examen = examenFeignClient.obtenerExamenPorId(examenId);
 		Set<Pregunta> preguntas = examen.getPreguntas();
 		List<Long> preguntaIds = 
 				preguntas
@@ -46,12 +41,13 @@ public class RespuestaServiceImpl implements IRespuestaService{
 					return r;
 				}).collect(Collectors.toList());
 		return respuestas;
-		
+		 */
+		return repository.findRespuestaByAlumnoByExamen(alumnoId, examenId);
 		
 	}
 	@Override
 	public List<Long> findExamenesIdConRespuestasByAlumnoId(Long alumnoId) {
-		List<Respuesta> respuestaAlumno = repository.findByAlumnoId(alumnoId);
+		/*List<Respuesta> respuestaAlumno = repository.findByAlumnoId(alumnoId);
 		List<Long> examenIds = Collections.emptyList();
 		if(!respuestaAlumno.isEmpty()) {
 			List<Long> preguntaIds = respuestaAlumno.stream()
@@ -60,7 +56,12 @@ public class RespuestaServiceImpl implements IRespuestaService{
 			examenIds = examenFeignClient
 					.obtenerExamenesIdsConRespuestasPorPreguntasIds(preguntaIds);
 		}
-		return examenIds;
+		*/
+		List<Respuesta> respuestas = repository.findExamenesIdConRespuestaByAlumno(alumnoId);
+		return respuestas.stream()
+				.map(r -> r.getPregunta().getExamen().getId())
+				.distinct()
+				.collect(Collectors.toList());
 	}
 
 	@Override
