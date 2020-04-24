@@ -32,6 +32,11 @@
                     </tr>
                 </tbody>
             </table>
+            <mat-paginator [length]="totalRegistros"
+                [pageSize]="sizePagina"
+                [pageIndex]="paginaActual"
+                 (page)="paginar($event)" showFirstLastButtons hidePageSize class="float-left mx-2">
+            </mat-paginator>
         </ng-template>
     </div>
 </div>
