@@ -22,7 +22,10 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let alumno of entities">
-                        <td>{{alumno.id}}</td>
+                        <td><img class="img-thumbnail rounded" style="width: 64px; cursor: pointed;"
+                             [src]="alumno.fotoHashCode? 
+                                baseEndpoint + '/alumnos/upload/'+alumno.id+'?fotoHashcode='+alumno.fotoHashCode :
+                                'https://api.adorable.io/avatars/64/'+alumno.email"></td>
                         <td>{{alumno.nombre}}</td>
                         <td>{{alumno.apellidos}}</td>
                         <td>{{alumno.email}}</td>

@@ -45,8 +45,10 @@ public class ExamenController extends CommonController<Examen, IExamenService>{
 			.forEach(examenDB::removePregunta);
 		
 		examenDB.setPreguntas(examen.getPreguntas());
-		examenDB.setAsignatura(examen.getAsignatura() != null?
-				examen.getAsignatura() : examenDB.getAsignatura());
+		examenDB.setAsignaturaPadre(examen.getAsignaturaPadre() != null?
+				examen.getAsignaturaPadre() : examenDB.getAsignaturaPadre());
+		examenDB.setAsignaturaHija(examen.getAsignaturaHija() != null?
+				examen.getAsignaturaHija() : examenDB.getAsignaturaHija());
 		return ResponseEntity.status(HttpStatus.CREATED).body(service.save(examenDB));
 	}
 	

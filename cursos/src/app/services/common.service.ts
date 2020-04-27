@@ -1,10 +1,11 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Generic } from '../models/generic';
+import { BASE_ENDPOINT } from '../config/app';
 
 export abstract class CommonService<T extends Generic> {
   protected endpoint: string;
-  protected url: string = 'http://localhost:8090/api';
+  protected url: string = BASE_ENDPOINT;
   protected headers = new HttpHeaders({'Content-Type': 'application/json'});
 
   constructor(protected http: HttpClient) { }
@@ -17,8 +18,6 @@ export abstract class CommonService<T extends Generic> {
     const params = new HttpParams()
       .set('page',page)
       .set('size', size);
-      console.log(page + ' ' + size + ' '+ this.endpoint + ' ');
-      console.log(this.http);
     return this.http.get<any>(`${this.url+this.endpoint}/page`, {params: params});
   }
 

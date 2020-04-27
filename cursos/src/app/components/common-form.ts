@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { AlumnoService } from 'src/app/services/alumno.service';
-import { Alumno } from 'src/app/models/alumno';
+import { OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router'
 import Swal from 'sweetalert2';
 import { CommonService } from '../services/common.service';
@@ -56,7 +54,7 @@ export class CommonFormComponent<E extends Generic, S extends CommonService<E>> 
       entity => {
         Swal.fire(`${this.nombreModel} Editado`, `${this.nombreModel} ${this.entity.nombre} editado con éxito`, 'success');
         
-        this.router.navigate(['/alumnos']);
+        this.router.navigate([this.rutaRedirect]);
      },
      error => {
        if(error.status === 400) {

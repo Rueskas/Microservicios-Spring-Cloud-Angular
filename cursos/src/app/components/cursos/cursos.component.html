@@ -1,1 +1,40 @@
-<p>cursos works!</p>
+<div class="card border-dark mb-3">
+    <div class="card-header">
+        <h2>{{titulo}}</h2>
+    </div>
+    <div class="card-body text-dark">
+        <a routerLink="/cursos/form" class="btn btn-primary mb-4">Crear</a>
+        <div class="alert alert-info" *ngIf="entities?.length==0 else tableCursos">
+            No hay cursos para mostrar.
+        </div>
+        <ng-template #tableCursos>
+            <table class="table table-hover trable-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        <th>Fecha</th>
+                        <th>Alumnos</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let curso of entities">
+                        <td>{{curso.id}}</td>
+                        <td>{{curso.nombre}}</td>
+                        <td>{{curso.createAt | date: 'E, dd-MM-yyyy'}}</td>
+                        <td><a [routerLink]='["/cursos/asignar-alumnos", curso.id]' class="btn btn-info">Añadir ({{curso.alumnos.length}})</a></td>
+                        <td><a [routerLink]='["/cursos/form", curso.id]' class="btn btn-success">&raquo;</a></td>
+                        <td><a class="btn btn-danger text-white" (click)="eliminar(curso.id)">X</a></td>
+                    </tr>
+                </tbody>
+            </table>
+            <mat-paginator [length]="totalRegistros"
+                [pageSize]="sizePagina"
+                [pageIndex]="paginaActual"
+                 (page)="paginar($event)" showFirstLastButtons hidePageSize class="float-left mx-2">
+            </mat-paginator>
+        </ng-template>
+    </div>
+</div>

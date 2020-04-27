@@ -32,7 +32,7 @@ import lombok.ToString;
 @Table(name="alumnos")
 public class Alumno {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
 	@NotBlank

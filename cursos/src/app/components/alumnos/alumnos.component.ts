@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AlumnoService } from 'src/app/services/alumno.service';
 import { Alumno } from 'src/app/models/alumno';
 import { CommonListarComponent } from '../common-listar';
+import { BASE_ENDPOINT } from '../../config/app'; 
 
 @Component({
   selector: 'app-alumnos',
@@ -10,7 +11,7 @@ import { CommonListarComponent } from '../common-listar';
 })
 export class AlumnosComponent
   extends CommonListarComponent<Alumno, AlumnoService> implements OnInit {
-
+  public baseEndpoint = BASE_ENDPOINT; 
   constructor(service: AlumnoService) {
     super(service);
     this.titulo = 'Listado de Alumnos';

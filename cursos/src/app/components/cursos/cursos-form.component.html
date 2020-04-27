@@ -1,0 +1,22 @@
+<div class="card border-dark mb-3">
+    <div class="card-header">
+        <h2>{{entity.id? 'Editar Curso': 'Crear Curso'}}</h2>
+    </div>
+    <div class="card-body text-dark">
+        <a routerLink="/cursos">&laquo; Volver</a>
+        <form>
+            <div class="form-group mt-2">
+                <label for="nombre">Nombre:</label>
+                <input type="text" name="nombre" class="form-control" [(ngModel)]="entity.nombre" autofocus>
+                <div class="alert alert-danger" *ngIf="errors && errors.nombre">
+                    {{errors.nombre}}
+                </div>
+            </div>
+
+            <div class="form-group mt-4">
+                <button type="submit" (click)="entity.id? editar():crear()"
+                    [class]="entity.id? 'btn btn-success': 'btn btn-primary'">{{entity.id? 'Editar': 'Crear'}}</button>
+            </div>
+        </form>
+    </div>
+</div>

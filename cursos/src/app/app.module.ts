@@ -9,9 +9,19 @@ import { AppRoutingModule } from './app-routing.module';
 import { LayoutModule } from './layout/layout.module';
 import { HttpClientModule} from '@angular/common/http';
 import { AlumnosFormComponent } from './components/alumnos/alumnos-form.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { CursosFormComponent } from './components/cursos/cursos-form.component';
+import { ExamenesFormComponent } from './components/examenes/examenes-form.component';
+import { AsignarAlumnosComponent } from './components/cursos/asignar-alumnos.component';
+
+import {MatTableModule} from '@angular/material/table';
+import {MatInputModule} from '@angular/material/input'; 
+import {MatCheckboxModule} from '@angular/material/checkbox'; 
+import {MatButtonModule} from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
+import {MatTabsModule} from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -19,7 +29,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     AlumnosComponent,
     CursosComponent,
     ExamenesComponent,
-    AlumnosFormComponent
+    AlumnosFormComponent,
+    CursosFormComponent,
+    ExamenesFormComponent,
+    AsignarAlumnosComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +41,14 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatTableModule,
+    MatInputModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    ReactiveFormsModule,
+    MatCardModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

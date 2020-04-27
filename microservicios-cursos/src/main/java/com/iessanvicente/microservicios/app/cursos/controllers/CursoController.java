@@ -11,6 +11,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -61,7 +62,7 @@ public class CursoController extends CommonController<Curso, ICursoService>{
 	
 	@GetMapping("/page")
 	public ResponseEntity<?> listar(Pageable pageable){
-		List<Curso> cursos = service.findAll(pageable).stream()
+		Page<Curso> cursos = service.findAll(pageable)
 				.map(c -> {
 					c.getCursosAlumnos().forEach(ca->{
 						Alumno a = new Alumno();
@@ -69,8 +70,7 @@ public class CursoController extends CommonController<Curso, ICursoService>{
 						c.addAlumno(a);
 					});
 					return c;
-				})
-				.collect(Collectors.toList());
+				});
 			return ResponseEntity.ok(cursos);
 	}
 	
@@ -82,11 +82,13 @@ public class CursoController extends CommonController<Curso, ICursoService>{
 		if(curso == null) {
 			return ResponseEntity.notFound().build();
 		}
-		curso.setAlumnos(
-				service.obtenerAlumnosPorCurso(
-						curso.getCursosAlumnos().stream()
-						.map(ca -> ca.getAlumnoId())
-						.collect(Collectors.toList())));
+		if(curso.getCursosAlumnos() != null && !curso.getCursosAlumnos().isEmpty()) {
+			curso.setAlumnos(
+					service.obtenerAlumnosPorCurso(
+							curso.getCursosAlumnos().stream()
+							.map(ca -> ca.getAlumnoId())
+							.collect(Collectors.toList())));
+		}
 		return ResponseEntity.ok(curso);
 	}
 	

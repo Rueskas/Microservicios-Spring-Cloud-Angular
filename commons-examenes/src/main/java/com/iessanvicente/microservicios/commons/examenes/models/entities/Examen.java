@@ -57,8 +57,13 @@ public class Examen {
 	@NotNull
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="asignatura_id")
-	private Asignatura asignatura;
+	@JoinColumn(name="asignatura_padre_id")
+	private Asignatura asignaturaPadre;
+	@NotNull
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="asignatura_hija_id")
+	private Asignatura asignaturaHija;
 	
 	@Transient
 	private boolean respondido;

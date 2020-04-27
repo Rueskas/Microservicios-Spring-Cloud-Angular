@@ -1,0 +1,64 @@
+<div class="card border-dark mb-3">
+    <div class="card-header">
+        <h2>{{entity.id? 'Editar Examen': 'Crear Examen'}}</h2>
+    </div>
+    <div class="card-body text-dark">
+        <a routerLink="/examenes">&laquo; Volver</a>
+        <form>
+            <div class="form-group mt-2">
+                <label for="nombre">Nombre:</label>
+                <input type="text" name="nombre" class="form-control" [(ngModel)]="entity.nombre" autofocus>
+                <div class="alert alert-danger" *ngIf="errors && errors.nombre">
+                    {{errors.nombre}}
+                </div>
+            </div>
+            <div>
+                <label for="asignaturaPadre">Asignatura</label>
+                <select name="asignaturaPadre" id="asignaturaPadre" 
+                [(ngModel)]="entity.asignaturaPadre"
+                [compareWith]="compararAsignaturas"
+                class="form-control" (change)="cargarHijas()">
+                    <option [ngValue]="undefined">--- Seleccione una asignatura ---</option>
+                    <option [ngValue]="asignatura" *ngFor="let asignatura of asignaturasPadre">{{asignatura.nombre}}</option>
+                </select>
+                <div class="alert alert-danger" *ngIf="errors && errors.asignaturaPadre">
+                    {{errors.asignaturaPadre}}
+                </div>
+            </div>
+            
+            <div>
+                <label for="asignaturaHija">Asignatura</label>
+                <select name="asignaturaHija" id="asignaturaHija" 
+                [(ngModel)]="entity.asignaturaHija"
+                [compareWith]="compararAsignaturas"
+                class="form-control">
+                    <option [ngValue]="undefined">--- Seleccione una asignatura ---</option>
+                    <option [ngValue]="asignatura" *ngFor="let asignatura of asignaturasHija">{{asignatura.nombre}}</option>
+                </select>
+                <div class="alert alert-danger" *ngIf="errors && errors.asignaturaHija">
+                    {{errors.asignaturaHija}}
+                </div>
+            </div>
+            
+            <button class="btn btn-md btn-light my-3" (click)="agregarPregunta()">Agregar Pregunta</button>
+            <div class="alert alert-danger" *ngIf="errorPreguntas">El examén debe tener preguntas.</div>
+            <div *ngIf="entity.preguntas && entity.preguntas.length > 0" class="form-group mx-3">
+                <div *ngFor="let pregunta of entity.preguntas; let i = index" class="row my-2">
+                    <div class="col-sm-2">
+                        <label for="{{i}}">Pregunta {{i+1}}</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <input type="text" name="{{'pregunta'+pregunta.id}}" [(ngModel)]="pregunta.texto" class="form-control" >
+                    </div>
+                    <div class="col-sm-1">
+                        <button class="btn btn-danger text-white" (click)="eliminarPregunta(i)">X</button>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mt-4">
+                <button type="submit" (click)="entity.id? editar():crear()"
+                    [class]="entity.id? 'btn btn-success': 'btn btn-primary'">{{entity.id? 'Editar': 'Crear'}}</button>
+            </div>
+        </form>
+    </div>
+</div>
